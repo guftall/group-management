@@ -1,17 +1,18 @@
-import { getClient, knex } from './pg'
+import { getClient } from './pg'
 
 export async function groups(id?: number): Promise<Group[]> {
     let client = await getClient()
 
-    let q = knex<Group>('groups')
-        .select()
+    let params = []
+    let sql = `SELECT * FROM groups`
+
 
     if (id) {
-        q = q.where({ id })
+        params.push(id)
+        sql = `${sql} WHERE id = $1`
     }
 
-    let { sql, bindings } = q.toSQL().toNative()
-    let { rows } = await client.query(sql, bindings)
+    let { rows } = await client.query(sql, params)
     await client.end()
 
     return rows.map(row => ({

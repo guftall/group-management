@@ -1,10 +1,8 @@
 import Layout from '@/components/layout'
 import { groups } from '@/lib/group.repository'
 import { members } from '@/lib/member.repository'
-import { useRouter } from 'next/router'
 
 export default function SingleGroup({ group, members }) {
-    const router = useRouter()
 
     return (
         <Layout>

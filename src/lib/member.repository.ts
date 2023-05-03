@@ -1,13 +1,12 @@
-import { knex, getClient } from './pg'
+import { getClient } from './pg'
 
 export async function members(groupId: number) {
-    let q = knex<Member>('member')
-        .select()
-        .where({ group_id: groupId })
 
-    let { sql, bindings } = q.toSQL().toNative()
+    let sql = `SELECT * FROM member
+        WHERE group_id = $1`
+
     let client = await getClient()
-    let { rows } = await client.query(sql, bindings)
+    let { rows } = await client.query(sql, [groupId])
     await client.end()
     return rows
 }

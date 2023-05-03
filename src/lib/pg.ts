@@ -2,7 +2,6 @@
 import { default as pkg } from 'pg'
 const { types } = pkg
 const { Client } = require('pg')
-import knex1, { Knex } from 'knex'
 
 types.setTypeParser(types.builtins.INT8, x => {
     let bi = BigInt(x)
@@ -24,8 +23,3 @@ export async function getClient() {
 
     return client
 }
-
-
-export const knex = knex1({
-    client: 'pg'
-}) as Knex
